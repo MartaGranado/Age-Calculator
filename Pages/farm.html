@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Farm Animal Age Calculator</title>
+  <link rel="stylesheet" href="../index.css">
+</head>
+<body class="farm">
+
+<h1>𝑭𝒂𝒓𝒎 𝑨𝒏𝒊𝒎𝒂𝒍 𝑨𝒈𝒆 𝑪𝒂𝒍𝒄𝒖𝒍𝒂𝒕𝒐𝒓</h1>
+
+<a href="../index.html" class="button-link">Home</a>
+
+<label for="birthdate">Birth Date:</label>
+<input type="date" id="birthdate">
+
+<label for="animalType">Animal Type:</label>
+<select id="animalType">
+  <option value="cow">Cow</option>
+  <option value="pig">Pig</option>
+  <option value="sheep">Sheep</option>
+  <option value="goat">Goat</option>
+  <option value="chicken">Chicken</option>
+  <option value="horse">Horse</option>
+  <option value="duck">Duck</option>
+</select>
+
+<button onclick="calculate()">Calculate</button>
+
+<div id="result" class="hidden"></div>
+
+<script>
+function calculateAge(birthDate) {
+  const now = new Date();
+  const birth = new Date(birthDate);
+
+  let years = now.getFullYear() - birth.getFullYear();
+  let birthdayThisYear = new Date(now.getFullYear(), birth.getMonth(), birth.getDate());
+
+  if (now < birthdayThisYear) {
+    years--;
+    birthdayThisYear = new Date(now.getFullYear() - 1, birth.getMonth(), birth.getDate());
+  }
+
+  const days = Math.floor((now - birthdayThisYear) / (1000 * 60 * 60 * 24));
+
+  return { years, days };
+}
+
+function animalHumanYears(age, animal) {
+  const roundedAge = Math.floor(age);
+
+  if (animal === "horse") {
+    if (age <= 4) {
+      return (age * 6.5).toFixed(1);
+    } else {
+      const earlyYears = 4 * 6.5;
+      const laterYears = (age - 4) * 2.5;
+      return (earlyYears + laterYears).toFixed(1);
+    }
+  }
+
+  if (animal === "cow") {
+    // Scale 14 cow years ≈ 70 human years
+    return ((age / 14) * 70).toFixed(1);
+  }
+
+  const lookupTables = {
+    goat: {
+        1: 4.68,
+        2: 9.37,
+        3: 14.05,
+        4: 18.73,
+        5: 23.42,
+        6: 28.10,
+        7: 32.79,
+        8: 37.47,
+        9: 42.16,
+        10: 46.84
+    },
+    pig: {
+        1: 4.42,
+        2: 8.83,
+        3: 13.25,
+        4: 17.66,
+        5: 22.08,
+        6: 26.50,
+        7: 30.91,
+        8: 35.33,
+        9: 39.74,
+        10: 44.16
+    },
+    sheep: {
+        1: 7.03,
+        2: 14.05,
+        3: 21.08,
+        4: 28.10,
+        5: 35.13,
+        6: 42.15,
+        7: 49.18,
+        8: 56.20,
+        9: 63.23,
+        10: 70.25
+    },
+    chicken: {
+        1: 10.30,
+        2: 20.61,
+        3: 30.91,
+        4: 41.22,
+        5: 51.52,
+        6: 61.83,
+        7: 72.13,
+        8: 82.44,
+        9: 92.74,
+        10: 103.05
+    }
+  };
+
+  if (lookupTables[animal]) {
+    const table = lookupTables[animal];
+    if (roundedAge in table) {
+      return table[roundedAge].toFixed(2);
+    } else {
+      // If older than table, use the last known rate
+      const keys = Object.keys(table).map(Number);
+      const maxAge = Math.max(...keys);
+      const maxHuman = table[maxAge];
+      const rate = (maxHuman - table[maxAge - 1]) || 5; // fallback rate
+      const extraYears = age - maxAge;
+      const estimated = maxHuman + extraYears * rate;
+      return estimated.toFixed(2);
+    }
+  }
+
+  // Default for others (e.g., duck)
+  const multipliers = {
+    duck: 5
+  };
+
+  const multiplier = multipliers[animal] || 5;
+  return (age * multiplier).toFixed(1);
+}
+
+
+
+function calculate() {
+  const birthdate = document.getElementById('birthdate').value;
+  const animalType = document.getElementById('animalType').value;
+  const resultDiv = document.getElementById('result');
+
+  if (!birthdate) {
+    alert("Please enter a birthdate!");
+    return;
+  }
+
+  const { years, days } = calculateAge(birthdate);
+  const animalAge = years + (days / 365.2425);
+  const humanYears = animalHumanYears(animalAge, animalType);
+
+  resultDiv.innerHTML = `${animalType.charAt(0).toUpperCase() + animalType.slice(1)} is ${years} years and ${days} days old.<br><br><strong>In human years:</strong> ${humanYears} years.`;
+  resultDiv.classList.remove('hidden');
+}
+</script>
+
+</body>
+</html>

@@ -96,6 +96,27 @@ body {
   body.cat button:hover, body.cat a.button-link:hover {
     background-color: #28a428;
   }
+
+  body.home a.button-farm {
+    background-color: #1d5abb;
+    color: white;
+  }
+  body.home a.button-farm:hover {
+    background-color: #13215e;
+  }
+  
+  /* Farm page background */
+  body.farm {
+    background-color: #84e3f2; /* pale yellow */
+  }
+
+  body.farm button, body.farm a.button-link {
+    background-color: #1d5abb; /* green */
+    color: white;
+  }
+  body.farm button:hover, body.farm a.button-link:hover {
+    background-color: #13215e;
+  }
   
   .hidden {
     display: none;
