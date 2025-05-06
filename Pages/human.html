@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Human Age Calculator</title>
+  <link rel="stylesheet" href="../index.css">
+</head>
+<body class="human">
+
+<h1>𝑯𝒖𝒎𝒂𝒏 𝑨𝒈𝒆 𝑪𝒂𝒍𝒄𝒖𝒍𝒂𝒕𝒐𝒓</h1>
+
+<a href="../index.html" class="button-link">Home</a>
+
+<label for="birthdate">Birth Date:</label>
+<input type="date" id="birthdate">
+<button onclick="calculate()">Calculate</button>
+
+<div id="result" class="hidden"></div>
+
+<script>
+function calculateAge(birthDate) {
+  const now = new Date();
+  const birth = new Date(birthDate);
+
+  let years = now.getFullYear() - birth.getFullYear();
+  let birthdayThisYear = new Date(now.getFullYear(), birth.getMonth(), birth.getDate());
+
+  if (now < birthdayThisYear) {
+    years--;
+    birthdayThisYear = new Date(now.getFullYear() - 1, birth.getMonth(), birth.getDate());
+  }
+
+  const days = Math.floor((now - birthdayThisYear) / (1000 * 60 * 60 * 24));
+
+  return { years, days };
+}
+
+function calculate() {
+  const birthdate = document.getElementById('birthdate').value;
+  const resultDiv = document.getElementById('result');
+
+  if (!birthdate) {
+    alert("Please enter a birthdate!");
+    return;
+  }
+
+  const { years, days } = calculateAge(birthdate);
+  resultDiv.innerHTML = `You are ${years} years and ${days} days old.`;
+  resultDiv.classList.remove('hidden');
+}
+</script>
+
+</body>
+</html>

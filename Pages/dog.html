@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dog Age Calculator</title>
+  <link rel="stylesheet" href="../index.css">
+</head>
+<body class="dog">
+
+<h1>𝑫𝒐𝒈 𝑨𝒈𝒆 𝑪𝒂𝒍𝒄𝒖𝒍𝒂𝒕𝒐𝒓</h1>
+
+<a href="../index.html" class="button-link">Home</a>
+
+<label for="birthdate">Birth Date:</label>
+<input type="date" id="birthdate">
+
+<label for="dogSize">Dog Size:</label>
+<select id="dogSize">
+  <option value="small">Small</option>
+  <option value="medium">Medium</option>
+  <option value="large">Large</option>
+</select>
+
+<button onclick="calculate()">Calculate</button>
+
+<div id="result" class="hidden"></div>
+
+<script>
+function calculateAge(birthDate) {
+  const now = new Date();
+  const birth = new Date(birthDate);
+
+  let years = now.getFullYear() - birth.getFullYear();
+  let birthdayThisYear = new Date(now.getFullYear(), birth.getMonth(), birth.getDate());
+
+  if (now < birthdayThisYear) {
+    years--;
+    birthdayThisYear = new Date(now.getFullYear() - 1, birth.getMonth(), birth.getDate());
+  }
+
+  const days = Math.floor((now - birthdayThisYear) / (1000 * 60 * 60 * 24));
+
+  return { years, days };
+}
+
+function dogHumanYears(dogAge, size) {
+  if (dogAge <= 0) return 0;
+  let humanYears = 0;
+
+  if (dogAge >= 2) {
+    humanYears = 24; 
+    if (size === 'small') {
+      humanYears += (dogAge - 2) * 4;
+    } else if (size === 'medium') {
+      humanYears += (dogAge - 2) * 5;
+    } else { 
+      humanYears += (dogAge - 2) * 6;
+    }
+  } else if (dogAge >= 1) {
+    humanYears = 15 + (dogAge - 1) * 9;
+  } else {
+    humanYears = dogAge * 15;
+  }
+
+  return humanYears.toFixed(1);
+}
+
+function calculate() {
+  const birthdate = document.getElementById('birthdate').value;
+  const dogSize = document.getElementById('dogSize').value;
+  const resultDiv = document.getElementById('result');
+
+  if (!birthdate) {
+    alert("Please enter a birthdate!");
+    return;
+  }
+
+  const { years, days } = calculateAge(birthdate);
+  const dogAge = years + (days / 365.2425);
+  const humanYears = dogHumanYears(dogAge, dogSize);
+
+  resultDiv.innerHTML = `Dog is ${years} years and ${days} days old.<br><br><strong>In human years:</strong> ${humanYears} years.`;
+  resultDiv.classList.remove('hidden');
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+/* General styles for everything */
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+  }
+  
+  /* Homepage */
+  body.home {
+    background-color: #d394e4; /* lilac */
+  }
+  
+  /* Human page */
+  body.human {
+    background-color: #ed9090; /* soft red */
+  }
+  
+  /* Dog page */
+  body.dog {
+    background-color: #fcef79; /* soft yellow (cornsilk) */
+  }
+  
+  /* Cat page */
+  body.cat {
+    background-color: #aefe97; /* soft green */
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  /* Default button styles */
+  button, a.button-link {
+    display: inline-block;
+    padding: 20px 40px;
+    margin: 15px;
+    font-size: 22px;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    
+  }
+  
+  /* Specific buttons on Home Page */
+  body.home a.button-human {
+    background-color: #FF4C4C; /* red for human */
+    color: white;
+  }
+  body.home a.button-human:hover {
+    background-color: #cc0000;
+  }
+  
+  body.home a.button-dog {
+    background-color: #FFD700; /* yellow for dog */
+    color: black;
+  }
+  body.home a.button-dog:hover {
+    background-color: #E6C200;
+  }
+  
+  body.home a.button-cat {
+    background-color: #32CD32; /* green for cat */
+    color: white;
+  }
+  body.home a.button-cat:hover {
+    background-color: #28a428;
+  }
+  
+  /* Buttons inside each respective page */
+  body.human button, body.human a.button-link {
+    background-color: #FF4C4C; /* red */
+    color: white;
+  }
+  body.human button:hover, body.human a.button-link:hover {
+    background-color: #cc0000;
+  }
+  
+  body.dog button, body.dog a.button-link {
+    background-color: #FFD700; /* yellow */
+    color: black;
+  }
+  body.dog button:hover, body.dog a.button-link:hover {
+    background-color: #E6C200;
+  }
+  
+  body.cat button, body.cat a.button-link {
+    background-color: #32CD32; /* green */
+    color: white;
+  }
+  body.cat button:hover, body.cat a.button-link:hover {
+    background-color: #28a428;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  label, select, input {
+    display: block;
+    margin-top: 10px;
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+  }
+  
+  #result {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+  }
+  
